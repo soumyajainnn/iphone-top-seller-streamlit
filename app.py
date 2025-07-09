@@ -20,26 +20,31 @@ with st.form("prediction_form"):
     ram = st.selectbox("RAM (GB)", options=[2, 3, 4, 6, 8], index=3)
     submitted = st.form_submit_button("Predict")
 
-# Prediction and Chart
+# Prediction and chart
 if submitted:
     input_data = np.array([[sale_price, mrp, discount, ram]])
     prediction = model.predict(input_data)
     result = "✅ Top Seller" if prediction[0] == 1 else "❌ Not a Top Seller"
     st.success(f"Prediction: {result}")
 
-    # 📊 Combined Comparison Bar Chart
+    # 📊 Comparison Chart
     st.subheader("📊 Your Input vs Dataset Average")
 
-    avg_values = [85000, 95000, 11.2, 4]  # Dataset averages
+    avg_values = [85000, 95000, 11.2, 4]  # Replace with actual dataset averages if different
     user_values = [sale_price, mrp, discount, ram]
     feature_names = ["Sale Price", "MRP", "Discount (%)", "RAM"]
 
-    x = np.arange(len(feature_names))  # [0, 1, 2, 3]
+    x = np.arange(len(feature_names))
     width = 0.35
 
-    fig, ax = plt.subplots()
-    ax.bar(x - width/2, user_values, width, label='Your Input', color='skyblue')
-    ax.bar(x + width/2, avg_values, width, label='Dataset Avg', color='lightgreen')
+    fig, ax = plt.subplots(figsize=(8, 5))
+    bars1 = ax.bar(x - width/2, user_values, width, label='Your Input', color='skyblue')
+    bars2 = ax.bar(x + width/2, avg_values, width, label='Dataset Avg', color='lightgreen')
+
+    # Add labels
+    for bar in bars1 + bars2:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2, height + 2, round(height, 1), ha='center', va='bottom', fontsize=8)
 
     ax.set_ylabel('Values')
     ax.set_xticks(x)
@@ -48,5 +53,6 @@ if submitted:
     ax.set_title("Feature Comparison")
 
     st.pyplot(fig)
+
 
 
