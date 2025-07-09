@@ -76,6 +76,13 @@ if submitted:
 
     st.pyplot(fig2)
 
+# Add a divider and footer credit
+st.markdown("---")
+st.markdown(
+    "<p style='text-align: center; color: gray;'>Made with ❤️ by <strong>Soumya Jain</strong></p>",
+    unsafe_allow_html=True
+)
+
 
 
 

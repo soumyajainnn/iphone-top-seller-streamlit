@@ -13,30 +13,44 @@ These are more than just numbers — they can predict whether an iPhone model wi
 
 ---
 
-### 🔍 Problem Statement
+### 🔍 Problem Statement  
 Retailers often wonder: *Which iPhone models will perform best in the market?*  
 This app provides quick insights using just a few key inputs.
 
 ---
 
-### 🧠 Tech Stack
+### 📊 What Makes It Interactive?
 
-**Python** | **Streamlit** | **scikit-learn** | **NumPy** | **Pickle** | **GitHub**
+Along with predictions, the app now includes:
+
+- A comparison **bar chart of your inputs vs dataset averages**  
+- Separate visual graphs:
+  - 📉 *Sale Price vs MRP*  
+  - 🧮 *Discount (%) vs RAM*
+
+These help users better **visualize the decision boundaries** and improve model transparency.
 
 ---
 
-### ⚙️ What I Did
+### 🧠 Tech Stack  
+**Python** | **Streamlit** | **scikit-learn** | **NumPy** | **Matplotlib** | **Pickle** | **GitHub**
 
-- Trained a classification model
-- Built an interactive Streamlit UI
-- Packaged and deployed the app online
+---
+
+### ⚙️ What I Did  
+- Trained a classification model  
+- Built an interactive Streamlit UI  
+- Added visual analytics using Matplotlib  
+- Packaged and deployed the app online via Streamlit Cloud  
+- Open-sourced the project on GitHub
 
 ---
 
 ### 🚀 Live Demo  
-**🔗 [https://iphone-top-seller.streamlit.app](https://iphone-top-seller.streamlit.app)**
+🔗 **[https://iphone-top-seller.streamlit.app](https://iphone-top-seller.streamlit.app)**
 
 ---
 
 Thanks for checking it out!  
-— Soumya Jain
+— **Soumya Jain**
+
