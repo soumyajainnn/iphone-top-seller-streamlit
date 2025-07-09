@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Load trained model
 with open("iphone_classifier_final.pkl", "rb") as f:
@@ -19,9 +20,30 @@ with st.form("prediction_form"):
     ram = st.selectbox("RAM (GB)", options=[2, 3, 4, 6, 8], index=3)
     submitted = st.form_submit_button("Predict")
 
-# Prediction
+# Prediction and Chart
 if submitted:
     input_data = np.array([[sale_price, mrp, discount, ram]])
     prediction = model.predict(input_data)
     result = "✅ Top Seller" if prediction[0] == 1 else "❌ Not a Top Seller"
     st.success(f"Prediction: {result}")
+
+    # 📊 Comparison Bar Chart
+    st.subheader("📊 Your Input vs Dataset Average")
+
+    avg_values = [85000, 95000, 11.2, 4]  # Replace with your actual dataset average values
+    feature_names = ["Sale Price", "MRP", "Discount (%)", "RAM"]
+    user_values = [sale_price, mrp, discount, ram]
+
+    fig, ax = plt.subplots()
+    x = np.arange(len(feature_names))
+
+    ax.bar(x - 0.2, user_values, width=0.4, label='Your Input', color='skyblue')
+    ax.bar(x + 0.2, avg_values, width=0.4, label='Dataset Avg', color='lightgreen')
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(feature_names)
+    ax.set_ylabel('Values')
+    ax.legend()
+
+    st.pyplot(fig)
+
