@@ -20,39 +20,62 @@ with st.form("prediction_form"):
     ram = st.selectbox("RAM (GB)", options=[2, 3, 4, 6, 8], index=3)
     submitted = st.form_submit_button("Predict")
 
-# Prediction and chart
+# Prediction + Charts
 if submitted:
     input_data = np.array([[sale_price, mrp, discount, ram]])
     prediction = model.predict(input_data)
     result = "✅ Top Seller" if prediction[0] == 1 else "❌ Not a Top Seller"
     st.success(f"Prediction: {result}")
 
-    # 📊 Comparison Chart
-    st.subheader("📊 Your Input vs Dataset Average")
+    # Dataset average values
+    avg_sale_price = 85000
+    avg_mrp = 95000
+    avg_discount = 11.2
+    avg_ram = 4
 
-    avg_values = [85000, 95000, 11.2, 4]  # Replace with actual dataset averages if different
-    user_values = [sale_price, mrp, discount, ram]
-    feature_names = ["Sale Price", "MRP", "Discount (%)", "RAM"]
+    # 🔹 Chart 1: Sale Price vs MRP
+    st.subheader("💰 Price Comparison")
 
-    x = np.arange(len(feature_names))
+    features1 = ["Sale Price", "MRP"]
+    user_values1 = [sale_price, mrp]
+    avg_values1 = [avg_sale_price, avg_mrp]
+
+    fig1, ax1 = plt.subplots()
+    x1 = np.arange(len(features1))
     width = 0.35
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    bars1 = ax.bar(x - width/2, user_values, width, label='Your Input', color='skyblue')
-    bars2 = ax.bar(x + width/2, avg_values, width, label='Dataset Avg', color='lightgreen')
+    ax1.bar(x1 - width/2, user_values1, width, label='Your Input', color='skyblue')
+    ax1.bar(x1 + width/2, avg_values1, width, label='Dataset Avg', color='lightgreen')
 
-    # Add labels
-    for bar in bars1 + bars2:
-        height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2, height + 2, round(height, 1), ha='center', va='bottom', fontsize=8)
+    ax1.set_ylabel('₹')
+    ax1.set_xticks(x1)
+    ax1.set_xticklabels(features1)
+    ax1.set_title('Sale Price & MRP Comparison')
+    ax1.legend()
 
-    ax.set_ylabel('Values')
-    ax.set_xticks(x)
-    ax.set_xticklabels(feature_names)
-    ax.legend()
-    ax.set_title("Feature Comparison")
+    st.pyplot(fig1)
 
-    st.pyplot(fig)
+    # 🔹 Chart 2: Discount (%) vs RAM
+    st.subheader("📉 Discount & RAM Comparison")
+
+    features2 = ["Discount (%)", "RAM (GB)"]
+    user_values2 = [discount, ram]
+    avg_values2 = [avg_discount, avg_ram]
+
+    fig2, ax2 = plt.subplots()
+    x2 = np.arange(len(features2))
+
+    ax2.bar(x2 - width/2, user_values2, width, label='Your Input', color='orange')
+    ax2.bar(x2 + width/2, avg_values2, width, label='Dataset Avg', color='lightgreen')
+
+    ax2.set_ylabel('Value')
+    ax2.set_xticks(x2)
+    ax2.set_xticklabels(features2)
+    ax2.set_title('Discount & RAM Comparison')
+    ax2.legend()
+
+    st.pyplot(fig2)
+
 
 
 
