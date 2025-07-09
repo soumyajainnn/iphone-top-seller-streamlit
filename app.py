@@ -27,28 +27,26 @@ if submitted:
     result = "✅ Top Seller" if prediction[0] == 1 else "❌ Not a Top Seller"
     st.success(f"Prediction: {result}")
 
-    # --- Dataset Averages ---
-    avg_values = {
-        "Sale Price (₹)": 85000,
-        "MRP (₹)": 95000,
-        "Discount (%)": 11.2,
-        "RAM (GB)": 4
-    }
+    # 📊 Combined Comparison Bar Chart
+    st.subheader("📊 Your Input vs Dataset Average")
 
-    user_inputs = {
-        "Sale Price (₹)": sale_price,
-        "MRP (₹)": mrp,
-        "Discount (%)": discount,
-        "RAM (GB)": ram
-    }
+    avg_values = [85000, 95000, 11.2, 4]  # Dataset averages
+    user_values = [sale_price, mrp, discount, ram]
+    feature_names = ["Sale Price", "MRP", "Discount (%)", "RAM"]
 
-    st.subheader("📊 Feature-wise Comparison with Dataset Average")
+    x = np.arange(len(feature_names))  # [0, 1, 2, 3]
+    width = 0.35
 
-    for feature in avg_values.keys():
-        fig, ax = plt.subplots()
-        ax.bar(["Your Input", "Dataset Avg"], [user_inputs[feature], avg_values[feature]], 
-               color=['skyblue', 'lightgreen'])
-        ax.set_title(f"{feature}: Your Input vs Dataset Avg")
-        ax.set_ylabel(feature)
-        st.pyplot(fig)
+    fig, ax = plt.subplots()
+    ax.bar(x - width/2, user_values, width, label='Your Input', color='skyblue')
+    ax.bar(x + width/2, avg_values, width, label='Dataset Avg', color='lightgreen')
+
+    ax.set_ylabel('Values')
+    ax.set_xticks(x)
+    ax.set_xticklabels(feature_names)
+    ax.legend()
+    ax.set_title("Feature Comparison")
+
+    st.pyplot(fig)
+
 
