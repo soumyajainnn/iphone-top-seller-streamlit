@@ -79,9 +79,10 @@ if submitted:
 # Add a divider and footer credit
 st.markdown("---")
 st.markdown(
-    "<p style='text-align: center; color: gray;'>Made with ❤️ by <strong>Soumya Jain</strong></p>",
+    "<p style='text-align: center; color: gray;'>Made by <strong>Soumya Jain</strong></p>",
     unsafe_allow_html=True
 )
+
 
 
 
